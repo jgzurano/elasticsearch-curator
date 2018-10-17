@@ -1,6 +1,5 @@
 elasticsearch==6.3.1
 elasticsearch-curator==5.5.4
-voluptuous>=0.9.3
 boto3>=1.7.24
 requests_aws4auth>=0.9
 voluptuous>=0.9.3
