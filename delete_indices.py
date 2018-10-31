@@ -30,12 +30,16 @@ client = Elasticsearch([es_host],
                    timeout=60
                   )
 
-ilo = curator.IndexList(client)
-ilo.filter_by_regex(kind="prefix", value=prefix)
-ilo.filter_by_age(source="name", direction="older", timestring="%Y.%m.%d", unit="days", unit_count=days)
+try:
+  ilo = curator.IndexList(client)
+  ilo.filter_by_regex(kind="prefix", value=prefix)
+  ilo.filter_by_age(source="name", direction="older", timestring="%Y.%m.%d", unit="days", unit_count=days)
+except:
+  print("No indices found with prefix:",prefix)
+  sys.exit(0)
 
 if not ilo.indices:
-  print('\nNo matching indices found with days:', days, "prefix:", prefix)
+  print("No indices older than", days,"days with prefix:", prefix)
   sys.exit(0)
 
 print('Running curator prefix:', prefix, "days:", days, "action:", action, "affected indices:", ilo.indices)
