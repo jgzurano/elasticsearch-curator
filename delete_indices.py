@@ -42,12 +42,14 @@ if not ilo.indices:
   print("No indices older than", days,"days with prefix:", prefix)
   sys.exit(0)
 
-print('Running curator prefix:', prefix, "days:", days, "action:", action, "affected indices:", ilo.indices)
+print('Running curator prefix:', prefix, "days:", days, "action:", action)
+print('Affected indices')
+for index in ilo.indices:
+  print(index)
+
+delete_indices = curator.DeleteIndices(ilo)
 
 if action == "DELETE":
-  delete_indices = curator.DeleteIndices(ilo)
   delete_indices.do_action()
-  print("\n")
-  print("Index List")
-  for index in client.indices.get("*"):
-    print(index)
+else:
+  delete_indices.do_dry_run()
