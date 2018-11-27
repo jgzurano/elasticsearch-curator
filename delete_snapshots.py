@@ -27,7 +27,7 @@ from elasticsearch import Elasticsearch
 client = Elasticsearch([es_host],
                    http_auth=(es_user, es_pass),
                    port=es_port,
-                   timeout=300
+                   timeout=3600
                   )
 
 try:
